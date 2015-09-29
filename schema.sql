@@ -14,9 +14,9 @@ CREATE TABLE Area (
 CREATE TABLE Restaurant (
 	id int NOT NULL,
 	zip varchar(10) NOT NULL,
-	name text,
+	name text NOT NULL,
 	cuisine text,
-	open_now boolean,
+	open_now boolean NOT NULL,
 	price_range int, -- same scale as in Proposal
 	website_url text,
 	PRIMARY KEY(id),
@@ -44,7 +44,7 @@ CREATE TABLE Proposal (
 CREATE TABLE Meal (
 	id int NOT NULL,
 	size int,
-	time date,
+	mtime timestamp,
 	pending boolean,
 	PRIMARY KEY(id)
 );
@@ -52,18 +52,17 @@ CREATE TABLE Meal (
 CREATE TABLE Matched (
 	mid int NOT NULL,
 	pid int NOT NULL,
-	PRIMARY KEY(pid, mid),
+	PRIMARY KEY(mid, pid),
 	FOREIGN KEY(mid) REFERENCES Meal(id),
 	FOREIGN KEY(pid) REFERENCES Proposal(id)
 );
 
 CREATE TABLE Reservation (
-	id int,
 	mid int,
-	rid int,
+	rid int NOT NULL,
 	size int,
-	time date,
-	PRIMARY KEY(id),
+	rtime timestamp,
+	PRIMARY KEY(mid),
 	FOREIGN KEY(mid) REFERENCES Meal(id), -- This is equivalent to the Placed for relationship
 	FOREIGN KEY(rid) REFERENCES Restaurant(id)
 );
