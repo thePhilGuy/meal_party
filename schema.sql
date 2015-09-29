@@ -25,11 +25,11 @@ CREATE TABLE Restaurant (
 
 CREATE TABLE Proposal (
 	id int NOT NULL,
-	uid int,
+	uid int NOT NULL,
 	rid int NULL, -- at relationship
-	zip varchar(10), -- in (area) relationship
-	from_time date NOT NULL,
-	until_time date NOT NULL,
+	zip varchar(10) NOT NULL, -- in (area) relationship
+	from_time timestamp NOT NULL,
+	until_time timestamp NOT NULL,
 	ideal_size int,
 	minimum_size int,
 	maximum_size int,
