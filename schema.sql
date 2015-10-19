@@ -34,9 +34,9 @@ CREATE TABLE Proposal (
 	CHECK (from_time < until_time), -- from_time is before until_time
 	ideal_size int,
 	minimum_size int,
-	CHECK (minimum_size > 1),
+	CHECK (minimum_size >= 1),
 	maximum_size int,
-	CHECK (minimum_size < maximum_size),
+	CHECK (minimum_size <= maximum_size),
 	price_range int, -- 0 to 4, price range only has 5 options
 	CHECK (price_range >= 0 and price_range < 5),
 	pending boolean,
