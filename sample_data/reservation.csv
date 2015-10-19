@@ -1,0 +1,8 @@
+mid, rid, size, rtime
+0, 1, 4, 'September 21 12:00:00 2015 EST'
+1, 8, 2, 'September 21 13:00:00 2015 EST'
+3, 1, 4, 'September 22 13:00:00 2015 EST'
+4, 8, 2, 'September 22 13:00:00 2015 EST'
+6, 1, 4, 'September 23 13:00:00 2015 EST'
+7, 8, 2, 'September 23 13:00:00 2015 EST'
+9,
