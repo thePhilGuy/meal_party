@@ -8,7 +8,7 @@ INNER JOIN Restaurant
 ON Area.zip=Restaurant.zip
 WHERE (Area.school_campus = '') IS FALSE;
 
-
-SELECT SUM(ideal_size) 
-FROM Proposal 
-WHERE ideal_size > 2;
+# Count pending meals
+SELECT COUNT(id)
+FROM Meal
+WHERE Meal.pending IS TRUE;
