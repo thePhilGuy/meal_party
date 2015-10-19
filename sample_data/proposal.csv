@@ -1,0 +1,11 @@
+id ,uid, rid, zip, from_time, until_time, ideal_size, minimum_size, maximum_size, price_range, pending 
+0, 1, 2, '30127', 'September 29 12:00:00 2015 EST' , 'September 29 13:00:00 2015 EST', 3, 2, 4, 2, true
+1, 4, 3, '10027', 'September 26 1:00:00 2015 EST' , 'September 26 2:00:00 2015 EST', 4, 2, 6, 0, true 
+2, 7, 0, '10027', 'September 28 2:00:00 2015 EST' , 'September 28 3:00:00 2015 EST', 5, 2, 7, 2, true 
+3, 6, 1, '90111', 'September 24 2:00:00 2015 EST' , 'September 24 4:00:00 2015 EST', 2, 2, 5, 1, true
+4, 9, 1, '54111', 'September 24 3:00:00 2015 EST' , 'September 24 4:00:00 2015 EST', 4, 2, 5, 3, true
+5, 0, 0, '10028', 'September 25 2:00:00 2015 EST' , 'September 25 10:00:00 2015 EST', 3, 1, 4, 4, true
+6, 2, 3, '11111', 'September 24 6:00:00 2015 EST' , 'September 24 8:00:00 2015 EST', 4, 2, 6, 3, true
+7, 3, 2, '10025', 'September 25 2:00:00 2015 EST' , 'September 25 4:00:00 2015 EST', 3, 2, 4, 1, true
+8, 5, 2, '30127', 'September 26 8:00:00 2015 EST' , 'September 26 12:00:00 2015 EST', 2, 2, 4, 1, true
+9, 8, 1, '54223', 'September 27 11:00:00 2015 EST' , 'September 27 12:00:00 2015 EST', 7, 7, 7, 4, true
