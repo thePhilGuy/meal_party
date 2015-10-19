@@ -18,6 +18,7 @@ CREATE TABLE Restaurant (
 	cuisine text,
 	open_now boolean NOT NULL,
 	price_range int, -- same scale as in Proposal
+	CHECK (price_range >= 0 and price_range < 5),
 	website_url text,
 	PRIMARY KEY(id),
 	FOREIGN KEY(zip) REFERENCES Area(zip) -- Is in relationship
@@ -30,10 +31,14 @@ CREATE TABLE Proposal (
 	zip varchar(10) NOT NULL, -- in (area) relationship
 	from_time timestamp NOT NULL,
 	until_time timestamp NOT NULL,
+	CHECK (from_time < until_time), -- from_time is before until_time
 	ideal_size int,
 	minimum_size int,
+	CHECK (minimum_size > 1),
 	maximum_size int,
+	CHECK (minimum_size < maximum_size),
 	price_range int, -- 0 to 4, price range only has 5 options
+	CHECK (price_range >= 0 and price_range < 5),
 	pending boolean,
 	PRIMARY KEY(id),
 	FOREIGN KEY(uid) REFERENCES Person(id),
@@ -44,6 +49,7 @@ CREATE TABLE Proposal (
 CREATE TABLE Meal (
 	id int NOT NULL,
 	size int,
+	CHECK (size > 1),
 	mtime timestamp,
 	pending boolean,
 	PRIMARY KEY(id)
@@ -61,6 +67,7 @@ CREATE TABLE Reservation (
 	mid int,
 	rid int NOT NULL,
 	size int,
+	CHECK (size > 0),
 	rtime timestamp,
 	PRIMARY KEY(mid),
 	FOREIGN KEY(mid) REFERENCES Meal(id), -- This is equivalent to the Placed for relationship
