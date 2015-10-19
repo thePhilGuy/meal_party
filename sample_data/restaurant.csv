@@ -1,0 +1,11 @@
+id, zip, name, cuisine, open_now, price_range, website_url
+0, '10027', 'Mels', 'burgers', true, 2, 'http://Mels.food'
+1, '10027', 'Chipotle', 'mexican', false, 1, 'http://chipotle.food'
+2, '10027', 'hamdel', 'deli sandwiches', true, 0, 'http://hamdel.food'
+3, '10027', 'diginn', 'umami', true, 3, 'http://diginn.food'
+4, '90111', 'in n out', 'burgers', true, 1, 'http://innout.food'
+5, '90111', 'Chipotle', 'mexican', true, 1, 'http://chipotle.food'
+6, '54223', 'McDonalds', 'burgers', true, 0, 'http://mcdonalds.food'
+7, '10025', 'maoz', 'vegetarian', false, 1, 'http://maoz.food'
+8, '54223', 'maoz', 'vegetarian', true, 1, 'http://maoz.food'
+9, '10025', 'McDonalds', 'burgers', true, 0, 'http://mcdonalds.food'
