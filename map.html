@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Meal Party</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Bootstrap -->
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <!-- - -->
+  </head>
+
+  <body>
+
+    <div class="input-group" id="floating-search">
+      <input type="text" id="address" class="form-control" placeholder="Where do you want to eat?..">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="submit">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+      </span>
+    </div>
+
+    <div id="floating-jumbotron">
+      <h1>Welcome to mealparty!</h1>
+      <p>We invite you to use our web application for its the ability to create and join groups.  Based on his/her preferences (price range, cuisine, desired group number, location, etc), a user will be able to use our grouping system to find other users in the area who are in the mood for similar restaraunts and have a compatible schedule.<p>
+      <p>So go on and tell us more about where you would like to eat using our search bar on the map</p>
+    </div>
+
+    <div id="map"></div>
+    <script src="javascript/google_maps.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxx&callback=initMap"
+        async defer>
+    </script>
+
+  </body>
+
+</html>
