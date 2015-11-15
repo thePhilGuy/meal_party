@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Meal Party</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+  <body>
+    <div id="floating-panel">
+      <label for="address">Where do you want to eat?</label>
+      <input id="address" type="textbox" value="Around...">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+    <script src="javascript/google_maps.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtmxU_ZWa6ZWOxn1sTvnvN1y96wK2y_u8&callback=initMap"
+        async defer>
+    </script>
+  </body>
+</html>
