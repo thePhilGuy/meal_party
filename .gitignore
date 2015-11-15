@@ -1,0 +1,6 @@
+bin/*
+lib/*
+include/*
+insertify
+pip-selfcheck.json
+*.db
