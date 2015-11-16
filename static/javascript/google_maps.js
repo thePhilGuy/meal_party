@@ -14,8 +14,6 @@ function initMap() {
     geocodeAddress(geocoder, map);
   });
 
-  var infoWindow = new google.maps.InfoWindow({map: map});
-
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -24,23 +22,11 @@ function initMap() {
         lng: position.coords.longitude
       };
 
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
       map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
     // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
   }
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
 }
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -48,10 +34,16 @@ function geocodeAddress(geocoder, resultsMap) {
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
       resultsMap.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
+
+      var result = results[0];
+
+      var component = results[0].address_components.filter(function(item) {
+        return item.types[0] === 'postal_code';
       });
+
+      console.log(component);
+
+      if (component.length != 0) console.log("This is precise enough!");
 
       // Display bounds around the geocoded area
       displayBounds(results[0].geometry.bounds, resultsMap);
