@@ -43,10 +43,17 @@ function geocodeAddress(geocoder, resultsMap) {
 
       console.log(component);
 
-      if (component.length != 0) console.log("This is precise enough!");
+      if (component.length != 0) {
+        console.log("This is precise enough!");
+        var bounds = new google.maps.LatLngBounds(
+          result.geometry.viewport.getSouthWest(), 
+          result.geometry.viewport.getNorthEast()
+        );
 
-      // Display bounds around the geocoded area
-      displayBounds(results[0].geometry.bounds, resultsMap);
+        // Display bounds around the geocoded area
+        displayBounds(bounds, resultsMap);
+        $("#floating-alert").fadeIn();
+      }
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }

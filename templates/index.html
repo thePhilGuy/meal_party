@@ -16,6 +16,10 @@
       <p>So go on and tell us more about where you would like to eat using our search bar on the map</p>
     </div>
 
+    <div class="alert alert-info" role="alert" id="floating-alert">
+      Congratulations, it seems like this is a valid area to eat at.
+    </div>
+
     <div id="map"></div>
     <script src="{{ url_for('static', filename='javascript/google_maps.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=secreeeet&callback=initMap"
