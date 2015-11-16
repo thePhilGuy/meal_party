@@ -96,7 +96,7 @@ def area(zip):
   """
   context = dict(zip = zip)
 
-  return render_template("another.html", **context)
+  return render_template("area.html", **context)
 
 if __name__ == "__main__":
   import click
