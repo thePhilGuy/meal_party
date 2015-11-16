@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 {% block title %}restaurant_map{% endblock %}
+{% block head %}
+	<script src="{{ url_for('static', filename='javascript/proposal.js') }}">
+	</script>
+	{{ super() }}
+{% endblock %}
 {% block content %}
 	<div id="floating-cuisines">
-	So you want to eat these kinds of food?
-	{% for cuisine in cuisines %}
-	<div class="checkbox">
-	  <label>
-	    <input type="checkbox" value="" checked>
-	    {{ cuisine }}
-	  </label>
-	</div>
-	{% endfor %}
+		So you want to eat these kinds of food huh? <br \>
+		{% for cuisine in cuisines %}
+		<div class="checkbox-inline">
+		  <label>
+		    <input type="checkbox" value="{{ cuisine }}" checked>
+		    {{ cuisine }}
+		  </label>
+		</div>
+		{% endfor %}
+		<!-- Pass zip and checked cuisines -->
+		<button class="btn btn-default" onclick="detailsForm()">Yes, take my availibility and details</button>
 	</div>
 
     <div id="map"></div>
     <script>
     	var zip = "{{ zip }}";
     	var restaurants = {{ restaurants|tojson|safe }};
-    	console.log(restaurants);
     </script>
     <script src="{{ url_for('static', filename='javascript/google_maps.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=secret&callback=initRestaurantMap"

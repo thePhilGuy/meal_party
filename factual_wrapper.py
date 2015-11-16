@@ -28,7 +28,7 @@ def get_restaurants_by_zip(zip):
 		restaurant['latitude'] = data[i]['latitude']
 		restaurant['longitude'] = data[i]['longitude']
 		results.append(restaurant)
-	pprint(results)
+	# pprint(results)
 	# print "Set of cuisines in ", zip
 	# pprint(cuisines)
 	return cuisines, results
