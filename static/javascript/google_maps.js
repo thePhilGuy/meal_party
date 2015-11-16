@@ -1,4 +1,4 @@
-function initMap() {
+function initBigMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     scrollwheel: false,
     draggable: false,
@@ -41,10 +41,10 @@ function geocodeAddress(geocoder, resultsMap) {
         return item.types[0] === 'postal_code';
       });
 
-      console.log(component);
 
       if (component.length != 0) {
-        console.log("This is precise enough!");
+        var postal_code = component[0].long_name;
+
         var bounds = new google.maps.LatLngBounds(
           result.geometry.viewport.getSouthWest(), 
           result.geometry.viewport.getNorthEast()
@@ -54,7 +54,9 @@ function geocodeAddress(geocoder, resultsMap) {
         displayBounds(bounds, resultsMap);
 
         // Display next phase alert
-        document.getElementById("floating-alert").innerHTML = "<a class=\"alert-link\" href=\"/area/10025\">Find out about food.</a>";
+        // Link to /area/<zip>
+        var link = "<a class=\"alert-link\" href=\"/area/" + postal_code + "\">Find out about food.</a>";
+        document.getElementById("floating-alert").innerHTML = link;
         $("#floating-alert").fadeIn();
 
       }
@@ -74,4 +76,24 @@ function displayBounds(bounds, resultsMap) {
     }
     var rectangle = new google.maps.Rectangle(rectangleOptions);
     rectangle.setMap(resultsMap);
+}
+
+function initRestaurantMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    scrollwheel: false,
+    draggable: false,
+    center: {lat: 0, lng: 0},
+    disableDefaultUI: true,
+    zoom: 14
+  });
+
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': zip}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      map.fitBounds(results[0].geometry.viewport);
+      // map.setCenter(results[0].geometry.location);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
 }
