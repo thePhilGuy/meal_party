@@ -18,6 +18,7 @@ import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
+import factual_wrapper
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -94,7 +95,17 @@ def area(zip):
   """
   Second map at specific area
   """
-  context = dict(zip = zip)
+
+  # Get restaurants info for area
+  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(zip)
+
+  # Store in database?
+
+  # Google API will only need lat/long/name
+  restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
+                           for r in restaurant_results ]
+
+  context = dict(zip=zip, restaurants=restaurant_locations, cuisines=cuisine_results)
 
   return render_template("area.html", **context)
 
