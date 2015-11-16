@@ -11,14 +11,14 @@ def get_restaurants_by_zip(zip):
 	# get data from factual API
 	restaurants = factual.table('restaurants-us')
 	n_limit = 3
-	data = restaurants.filters({'postcode':zip}).limit(n_limit).data()
+	data = restaurants.filters({'postcode':zip}).data()
 
 	# return objects
 	results = []
 	cuisines = set()
 
 	# build results
-	for i in xrange(n_limit):
+	for i in xrange(len(data)):
 		restaurant = dict()
 		restaurant['name'] = data[i]['name']
 		restaurant['cuisines'] = data[i]['cuisine']

@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% block title %}restaurant_map{% endblock %}
 {% block content %}
+	<div id="floating-cuisines">
+	So you want to eat these kinds of food?
+	{% for cuisine in cuisines %}
+	<div class="checkbox">
+	  <label>
+	    <input type="checkbox" value="" checked>
+	    {{ cuisine }}
+	  </label>
+	</div>
+	{% endfor %}
+	</div>
+
     <div id="map"></div>
     <script>
     	var zip = "{{ zip }}";
