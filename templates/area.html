@@ -2,9 +2,13 @@
 {% block title %}restaurant_map{% endblock %}
 {% block content %}
     <div id="map"></div>
+    <script>
+    	var zip = "{{ zip }}";
+    	var restaurants = {{ restaurants|tojson|safe }};
+    	console.log(restaurants);
+    </script>
     <script src="{{ url_for('static', filename='javascript/google_maps.js') }}"></script>
-    <script>var zip = "{{ zip }}";</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtmxU_ZWa6ZWOxn1sTvnvN1y96wK2y_u8&callback=initRestaurantMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=secret&callback=initRestaurantMap"
         async defer>
     </script>
 {% endblock %}

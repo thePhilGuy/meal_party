@@ -91,9 +91,20 @@ function initRestaurantMap() {
   geocoder.geocode({'address': zip}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
       map.fitBounds(results[0].geometry.viewport);
-      // map.setCenter(results[0].geometry.location);
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
+
+  restaurants.forEach(function(location) {
+    var position_options = {
+      lat: location.latitude,
+      lng: location.longitude
+    };
+
+    var marker = new google.maps.Marker({
+      position: position_options,
+      map: map
+    });
+  })
 }

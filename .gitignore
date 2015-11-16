@@ -4,3 +4,4 @@ include/*
 insertify
 pip-selfcheck.json
 *.db
+*.pyc
