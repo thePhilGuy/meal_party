@@ -52,7 +52,11 @@ function geocodeAddress(geocoder, resultsMap) {
 
         // Display bounds around the geocoded area
         displayBounds(bounds, resultsMap);
+
+        // Display next phase alert
+        document.getElementById("floating-alert").innerHTML = "<a class=\"alert-link\" href=\"/area/10025\">Find out about food.</a>";
         $("#floating-alert").fadeIn();
+
       }
     } else {
       alert('Geocode was not successful for the following reason: ' + status);

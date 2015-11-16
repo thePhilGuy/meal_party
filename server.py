@@ -80,7 +80,6 @@ def index():
   """
   MealParty landing page
   """
-
   # DEBUG: this is debugging code to see what request looks like
   print request.args
 
@@ -90,7 +89,14 @@ def index():
   #
   return render_template("index.html")
 
-  
+@app.route('/area/<zip>')  
+def area(zip):
+  """
+  Second map at specific area
+  """
+  context = dict(zip = zip)
+
+  return render_template("another.html", **context)
 
 if __name__ == "__main__":
   import click
