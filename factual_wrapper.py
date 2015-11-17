@@ -24,7 +24,7 @@ def get_restaurants_by_zip(zip):
 		restaurant['cuisines'] = data[i]['cuisine']
 		cuisines.update(restaurant['cuisines'])
 		restaurant['zip'] = data[i]['postcode']
-		restaurant['price'] = data[i]['price']
+		restaurant['website'] = data[i]['website']
 		restaurant['latitude'] = data[i]['latitude']
 		restaurant['longitude'] = data[i]['longitude']
 		results.append(restaurant)
