@@ -1,32 +1,104 @@
 {% extends "base.html" %}
 {% block title %}restaurant_map{% endblock %}
 {% block head %}
+	{{ super() }}
+	<script>
+		var zip = "{{ zip }}";
+		var restaurants = {{ restaurants|tojson|safe }};
+	</script>
 	<script src="{{ url_for('static', filename='javascript/proposal.js') }}">
 	</script>
-	{{ super() }}
 {% endblock %}
 {% block content %}
+
+	<!-- detail-form-modal -->
+	<div class="modal fade" id="detail-form-modal" tabindex="-1" role="dialog" aria-labelledby="detail-form-modal-label">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="detail-form-modal-label">Who and When?</h4>
+		  </div>
+		  <div class="modal-body">
+			Let's make this form happen
+			<!-- Proposal Form -->
+			<h4>Who</h4>
+			<p>How many new friends are you looking to make?</p>
+			<form>
+				<!-- Ideal, Min, Max Number of Partners-->
+				<div class="row">
+					<!-- min -->
+					<div class="col-xs-3">
+						<!-- Was too lazy to make 6 options -->
+						<select class="form-control">
+							{% for i in range(6) %}
+							<option>{{ i + 1 }}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+					<!-- ideal -->
+					<div class="col-xs-3">
+						<!-- Was too lazy to make 6 options -->
+						<select class="form-control">
+							{% for i in range(6) %}
+							<option>{{ i + 1 }}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+					<!-- max -->
+					<div class="col-xs-3">
+						<!-- Was too lazy to make 6 options -->
+						<select class="form-control">
+							{% for i in range(6) %}
+							<option>{{ i + 1 }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<!-- Get Date and time window -->
+
+				<!-- Get contact Information -->
+
+			</form>
+			<!-- End of Proposal Form -->
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Maybe I won't like pizza</button>
+			<button type="button" class="btn btn-primary">Let me know!</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 	<div id="floating-cuisines">
-		So you want to eat these kinds of food huh? <br \>
+		So you want to eat these kinds of food huh? <br />
+
+<!-- 		Price Range: <br />
+		<script>
+			$("price-slider").slider();
+		</script>
+		<div id="price-slider"></div> -->
+
 		{% for cuisine in cuisines %}
 		<div class="checkbox-inline">
 		  <label>
-		    <input type="checkbox" value="{{ cuisine }}" checked>
-		    {{ cuisine }}
+			<input type="checkbox" value="{{ cuisine }}" checked>
+			{{ cuisine }}
 		  </label>
 		</div>
 		{% endfor %}
+		<br \>
 		<!-- Pass zip and checked cuisines -->
-		<button class="btn btn-default" onclick="detailsForm()">Yes, take my availibility and details</button>
+		<button class="btn btn-default" data-toggle="modal" data-target="#detail-form-modal">
+			Yes, take my availibility and details
+		</button>
 	</div>
 
-    <div id="map"></div>
-    <script>
-    	var zip = "{{ zip }}";
-    	var restaurants = {{ restaurants|tojson|safe }};
-    </script>
-    <script src="{{ url_for('static', filename='javascript/google_maps.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=secret&callback=initRestaurantMap"
-        async defer>
-    </script>
+	<div id="map"></div>
+	<script src="{{ url_for('static', filename='javascript/google_maps.js') }}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=secret&callback=initRestaurantMap"
+		async defer>
+	</script>
 {% endblock %}

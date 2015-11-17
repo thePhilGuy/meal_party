@@ -1,7 +1,10 @@
-function detailsForm() {
-	var values = [];
-	$("#floating-cuisines :checked").each(function() {
-		values.append($(this).val());
+function getCuisines() {
+	// Get chosen cuisines
+	var cuisines = [];
+	$('#floating-cuisines :checked').each(function() {
+		cuisines.push($(this).val());
 	});
-	console.log(values);
+	console.log(cuisines);
+	return cuisines;
 }
+
