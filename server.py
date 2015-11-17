@@ -29,7 +29,7 @@ app.debug = True
 # Connect to the database on azure virtual machine
 # postgresql://USER:PASSWORD@w4111db1.cloudapp.net:5432/proj1part2
 #
-DATABASEURI = "sqlite:///test.db"
+DATABASEURI = "postgresql://postgres@localhost:5432/mealparty"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -66,15 +66,6 @@ def teardown_request(exception):
 #
 # @app.route is a decorator around index() that means:
 #   run index() whenever the user tries to access the "/" path using a POST or GET request
-#
-# If you wanted the user to go to e.g., localhost:8111/foobar/ with POST or GET then you could use
-#
-#       @app.route("/foobar/", methods=["POST", "GET"])
-#
-# PROTIP: (the trailing / in the path is important)
-# 
-# see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
-# see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 # 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -90,14 +81,28 @@ def index():
   #
   return render_template("index.html")
 
-@app.route('/area/<zip>')  
-def area(zip):
+@app.route('/area/<req_zip>')  
+def area(req_zip):
   """
   Second map at specific area
   """
 
+  print "In area/req_zip"
+
+  # Check if we already have area data 
+  # query : select count(*) from area where zip=req_zip
+  area_cursor = g.conn.execute("SELECT COUNT(*) FROM Area WHERE zip=\'" + req_zip + "\';")
+  area_count = area_cursor.fetchone()['count']
+  area_cursor.close()
+
+  # This is the first time this area was requested
+  if area_count < 1:
+
+    # Insert it into the database
+    g.conn.execute("INSERT INTO Area VALUES (\'" + req_zip + "\');")
+
   # Get restaurants info for area
-  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(zip)
+  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
 
   # Store in database?
 
@@ -105,7 +110,7 @@ def area(zip):
   restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
                            for r in restaurant_results ]
 
-  context = dict(zip=zip, restaurants=restaurant_locations, cuisines=cuisine_results)
+  context = dict(zip=req_zip, restaurants=restaurant_locations, cuisines=cuisine_results)
 
   return render_template("area.html", **context)
 
