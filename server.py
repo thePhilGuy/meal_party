@@ -30,7 +30,7 @@ app.debug = True
 # Connect to the database on azure virtual machine
 # postgresql://USER:PASSWORD@w4111db1.cloudapp.net:5432/proj1part2
 #
-DATABASEURI = "postgresql://postgres@localhost:5432/mealparty"
+DATABASEURI = "postgresql://azureuser@localhost:5432/mealparty"
 
 #
 # This line creates a database engine that knows how to connect to the URI above

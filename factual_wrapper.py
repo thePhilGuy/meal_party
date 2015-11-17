@@ -1,6 +1,6 @@
 from factual import Factual
 from pprint import pprint
-factual = Factual('key', 'secret')
+factual = Factual('1vPGfjthZLW474H2KbW1TRsYWdpTBn3eoMWbMdzk', 'tMBoCJF7gUZTOt8t2OC907ozRfRZVRAKsASzStUp')
 
 def get_restaurants_by_zip(zip):
 	# returns a set of cuisines, as well as a list of restaurants
