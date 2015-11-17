@@ -106,10 +106,9 @@ def area(req_zip):
 
   # Store in database?
   for element in restaurant_results:
-    args = ( , element["zip"], element["name"], element["website"])
-    g.conn.execute("INSERT INTO Restaurant\
-                    VALUES (, %s, %s, %s ", args)
-
+    args = (element["zip"], element["name"], element["website"], element["cuisines"])
+    # INSERT INTO Restaurant (zip, name, website_url, cuisine) VALUES (s, s, s, array) where array is formatted as {element[cuisines][0], etc...}
+    g.conn.execute("INSERT INTO Restaurant (zip, name, website_url, cuisine) VALUES (%s, %s, %s, %s);", args)
 
   # Google API will only need lat/long/name
   restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
