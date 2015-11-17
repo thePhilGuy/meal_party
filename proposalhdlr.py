@@ -1,4 +1,17 @@
 import smtplib
+import os
+from sqlalchemy import *
+from sqlalchemy.pool import NullPool
+from flask import Flask, request, render_template, g, redirect, Response
+
+tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+app = Flask(__name__, template_folder=tmpl_dir)
+
+DATABASEURI=postgresql://USER:PASSWORD@w4111db1.cloudapp.net:5432/proj1part2
+
+engine = create_engine(DATABASEURI)
+
+
 
 
 def sendMail(toaddr, message):
@@ -21,6 +34,15 @@ def timcompat(res, proposal):
 sharedCuisine = ""
 
 def commonCuisine(res, proposal):
+	try:
+    	g.conn = engine.connect()
+  	except:
+	    print "uh oh, problem connecting to database"
+	    import traceback; traceback.print_exc()
+	    g.conn = None
+
+
+
 	rescu = res["cuisine"].split(", ")
 	procu = proposal["cuisine"].split(", ")
 	for element in rescu:
