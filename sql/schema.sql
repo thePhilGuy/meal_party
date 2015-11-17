@@ -28,6 +28,7 @@ CREATE TABLE Proposal (
 	id int NOT NULL,
 	uid int NOT NULL,
 	rid int NULL, -- at relationship
+	cuisine text NOT NULL,
 	zip varchar(10) NOT NULL, -- in (area) relationship
 	from_time timestamp NOT NULL,
 	until_time timestamp NOT NULL,
@@ -47,19 +48,20 @@ CREATE TABLE Proposal (
 );
 
 CREATE TABLE Meal (
-	id int NOT NULL,
+	me_id int NOT NULL,
 	size int,
+	ideal_size int,
 	CHECK (size > 1),
 	mtime timestamp,
 	pending boolean,
-	PRIMARY KEY(id)
+	PRIMARY KEY(me_id)
 );
 
 CREATE TABLE Matched (
 	mid int NOT NULL,
 	pid int NOT NULL,
 	PRIMARY KEY(mid, pid),
-	FOREIGN KEY(mid) REFERENCES Meal(id),
+	FOREIGN KEY(mid) REFERENCES Meal(me_id),
 	FOREIGN KEY(pid) REFERENCES Proposal(id)
 );
 
@@ -70,6 +72,15 @@ CREATE TABLE Reservation (
 	CHECK (size > 0),
 	rtime timestamp,
 	PRIMARY KEY(mid),
-	FOREIGN KEY(mid) REFERENCES Meal(id), -- This is equivalent to the Placed for relationship
+	FOREIGN KEY(mid) REFERENCES Meal(me_id), -- This is equivalent to the Placed for relationship
 	FOREIGN KEY(rid) REFERENCES Restaurant(id)
 );
+
+
+#changes:
+###############################
+# add cuisine to proposal 
+# change meal.id to meal.me_id
+# add ideal_size to Meal
+# add constraint to schema start time <= endtime - 30 min (maybe)
+# save latitude and longitude  to restaurant (maybe)
