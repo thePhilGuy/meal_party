@@ -30,7 +30,7 @@ app.debug = True
 # Connect to the database on azure virtual machine
 # postgresql://USER:PASSWORD@w4111db1.cloudapp.net:5432/proj1part2
 #
-DATABASEURI = "postgresql://postgres@localhost:5432/mealparty"
+DATABASEURI = "postgresql://azureuser@localhost:5432/mealparty"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -104,7 +104,6 @@ def area(req_zip):
 
     # Store in database
     for element in restaurant_results:
-      args = (element["zip"], element["name"], element["website"], element["cuisines"])
       insert_query = text(
         "INSERT INTO Restaurant (zip, name, website_url, cuisine)"
         "VALUES (:z, :n, :w, :c);"
@@ -127,12 +126,36 @@ def party():
 
   proposal = request.get_json(force = True)
 
-  # Check if user is in database?
+  # Make sure we have this user in our database
+  person_id = 0;
   person_cursor = g.conn.execute("SELECT * FROM Person WHERE email=%s", proposal['email'])
   if person_cursor.rowcount < 1: 
-    print "There are no users by this name!"
+    # Person does not exist, add them
+    person = g.conn.execute("INSERT INTO Person (email, phone) VALUES (%s, %s)", (proposal['email'], proposal['phone']))
+    print person
+    person.close()
+    person_id = g.conn.execute("SELECT * FROM Person WHERE email=%s", proposal['email']).fetchone()['id']
   else: 
-    print "Oh yes there is"
+    # Person already exists, get id
+    person_id = person_cursor.fetchone()['id']
+  person_cursor.close()
+
+  print "Person id: ", person_id
+
+  # Insert proposal into database
+  insert_query = text(
+    "INSERT "
+    "INTO Proposal (uid, cuisine, zip, from_time, until_time, ideal_size, minimum_size, maximum_size, pending)"
+    "VALUES (:p, :c, :z, :f, :u, :i, :n, :m, TRUE);" )
+  g.conn.execute(insert_query, 
+    p=person_id,
+    c=", ".join(proposal["cuisines"]), 
+    z=proposal["zip"], 
+    f=proposal["from"], 
+    u=proposal["until"], 
+    i=proposal["ideal_size"], 
+    n=proposal['min_size'], 
+    m=proposal['max_size'])
 
   return render_template("index.html"), 201
 

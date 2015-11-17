@@ -58,6 +58,6 @@ function parseProposalForm() {
 		url: "/party",
 		type: "POST",
 		dataType: "json",
-		data: JSON.stringify(user_test)
+		data: JSON.stringify(user_proposal)
 	});
 }
