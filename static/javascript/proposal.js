@@ -40,5 +40,24 @@ function parseProposalForm() {
 		cuisines: cuisines
 	}
 
-	console.log(user_proposal);
+	var user_test = {
+		email: "pglosembe@gmail.com",
+		phone: "9179694303",
+		zip: '10025',
+		date: '12/15/2015',
+		from: '13:00',
+		until: '15:00',
+		min_size: 1,
+		max_size: 6,
+		ideal_size: 3,
+		cuisines: ['Chinese', 'Mexican']
+	}
+
+	console.log(user_test);
+	$.ajax({
+		url: "/party",
+		type: "POST",
+		dataType: "json",
+		data: JSON.stringify(user_test)
+	});
 }

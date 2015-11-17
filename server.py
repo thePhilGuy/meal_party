@@ -19,6 +19,7 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
 import factual_wrapper
+from pprint import pprint
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -87,7 +88,8 @@ def area(req_zip):
   Second map at specific area
   """
 
-  print "In area/req_zip"
+  # Get restaurants info for area
+  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
 
   # Check if we already have area data 
   # query : select count(*) from area where zip=req_zip
@@ -97,19 +99,17 @@ def area(req_zip):
 
   # This is the first time this area was requested
   if area_count < 1:
-
     # Insert it into the database
     g.conn.execute("INSERT INTO Area VALUES (\'" + req_zip + "\');")
 
-  # Get restaurants info for area
-  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
-
-  # Store in database?
-  for element in restaurant_results:
-    args = ( , element["zip"], element["name"], element["website"])
-    g.conn.execute("INSERT INTO Restaurant\
-                    VALUES (, %s, %s, %s ", args)
-
+    # Store in database
+    for element in restaurant_results:
+      args = (element["zip"], element["name"], element["website"], element["cuisines"])
+      insert_query = text(
+        "INSERT INTO Restaurant (zip, name, website_url, cuisine)"
+        "VALUES (:z, :n, :w, :c);"
+        )
+      g.conn.execute(insert_query, z=element["zip"], n=element["name"], w=element["website"], c=', '.join(element["cuisines"]))
 
   # Google API will only need lat/long/name
   restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
@@ -118,6 +118,23 @@ def area(req_zip):
   context = dict(zip=req_zip, restaurants=restaurant_locations, cuisines=cuisine_results)
 
   return render_template("area.html", **context)
+
+@app.route('/party', methods = ['POST'])
+def party():
+  """
+  We receive a post request to make a party happen
+  """
+
+  proposal = request.get_json(force = True)
+
+  # Check if user is in database?
+  person_cursor = g.conn.execute("SELECT * FROM Person WHERE email=%s", proposal['email'])
+  if person_cursor.rowcount < 1: 
+    print "There are no users by this name!"
+  else: 
+    print "Oh yes there is"
+
+  return render_template("index.html"), 201
 
 if __name__ == "__main__":
   import click
