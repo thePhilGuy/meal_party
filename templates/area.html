@@ -57,19 +57,23 @@
 			<h4>When?</h4>
 			<p>And when do you see this party happening?</p>
 			<form>
+				<div class="form-group">
+					<label for="meal-date">Date</label>
+					<input class="form-control" type="date" id="meal-date">
+				</div>
 				<div class="row">
 
 					<div class="col-xs-6">
 						<div class="form-group">
-						<label for="meal-date">Date</label>
-						<input class="form-control" type="date" id="meal-date">
+						<label for="meal-until">From</label>
+						<input class="form-control" type="time" id="meal-from">
 						</div>
 					</div>
 
 					<div class="col-xs-6">
 						<div class="form-group">
-						<label for="meal-time">Time</label>
-						<input class="form-control" type="time" id="meal-time">
+						<label for="meal-from">Until</label>
+						<input class="form-control" type="time" id="meal-until">
 						</div>
 					</div>
 
@@ -110,8 +114,6 @@
 
 	<div id="floating-cuisines">
 		So you want to eat these kinds of food huh? <br />
-
-		Price Range: <input type="range" name="price-slider" min="1" max="5"><br />
 
 		{% for cuisine in cuisines %}
 		<div class="checkbox-inline">
