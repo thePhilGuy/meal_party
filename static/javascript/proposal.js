@@ -8,3 +8,6 @@ function getCuisines() {
 	return cuisines;
 }
 
+function parseProposalForm() {
+	
+}
