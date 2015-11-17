@@ -33,7 +33,7 @@ CREATE TABLE Proposal (
 	CHECK (minimum_size >= 1),
 	maximum_size int,
 	CHECK (minimum_size <= maximum_size),
-	pending boolean,
+	pending boolean DEFAULT TRUE,
 	PRIMARY KEY(id),
 	FOREIGN KEY(uid) REFERENCES Person(id),
 	FOREIGN KEY(zip) REFERENCES Area(zip)
@@ -45,7 +45,7 @@ CREATE TABLE Meal (
 	ideal_size int,
 	CHECK (size > 1),
 	mtime timestamp,
-	pending boolean,
+	pending boolean DEFAULT TRUE,
 	PRIMARY KEY(me_id)
 );
 
