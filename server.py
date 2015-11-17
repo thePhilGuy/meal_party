@@ -105,6 +105,11 @@ def area(req_zip):
   cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
 
   # Store in database?
+  for element in restaurant_results:
+    args = ( , element["zip"], element["name"], element["website"])
+    g.conn.execute("INSERT INTO Restaurant\
+                    VALUES (, %s, %s, %s ", args)
+
 
   # Google API will only need lat/long/name
   restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
