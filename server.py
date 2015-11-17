@@ -160,8 +160,8 @@ def party():
   proposal_id = g.conn.execute("SELECT id FROM Proposal ORDER BY id DESC LIMIT 1").fetchone()['id']
   proposal["id"] = proposal_id
 
-  msg = "We know you want to party at %s, we'll let\
-          you know if any matches come up!!"
+  msg = """We know you want to party at {time}, we'll let\
+          you know if any matches come up!!""".format(time=proposal["from"])
   
   sendMail(proposal['email'], msg)
 
