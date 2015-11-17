@@ -1,5 +1,5 @@
 CREATE TABLE Person(
-	id int NOT NULL,
+	id serial,
 	email text,
 	phone text,
 	PRIMARY KEY(id)
@@ -7,43 +7,35 @@ CREATE TABLE Person(
 
 CREATE TABLE Area (
 	zip varchar(10) NOT NULL,
-	school_campus text,
 	PRIMARY KEY(zip)
 );
 
 CREATE TABLE Restaurant (
-	id int NOT NULL,
+	id serial,
 	zip varchar(10) NOT NULL,
 	name text NOT NULL,
-	cuisine text,
-	open_now boolean NOT NULL,
-	price_range int, -- same scale as in Proposal
-	CHECK (price_range >= 0 and price_range < 5),
+	cuisine text[],
 	website_url text,
 	PRIMARY KEY(id),
 	FOREIGN KEY(zip) REFERENCES Area(zip) -- Is in relationship
 );
 
 CREATE TABLE Proposal (
-	id int NOT NULL,
+	id serial,
 	uid int NOT NULL,
-	rid int NULL, -- at relationship
-	cuisine text NOT NULL,
+	cuisine text[],
 	zip varchar(10) NOT NULL, -- in (area) relationship
-	from_time timestamp NOT NULL,
-	until_time timestamp NOT NULL,
+	from_time time NOT NULL,
+	until_time time NOT NULL,
 	CHECK (from_time < until_time), -- from_time is before until_time
 	ideal_size int,
 	minimum_size int,
 	CHECK (minimum_size >= 1),
 	maximum_size int,
 	CHECK (minimum_size <= maximum_size),
-	price_range int, -- 0 to 4, price range only has 5 options
-	CHECK (price_range >= 0 and price_range < 5),
 	pending boolean,
 	PRIMARY KEY(id),
 	FOREIGN KEY(uid) REFERENCES Person(id),
-	FOREIGN KEY(rid) REFERENCES Restaurant(id), -- at relationship
 	FOREIGN KEY(zip) REFERENCES Area(zip)
 );
 
@@ -65,22 +57,11 @@ CREATE TABLE Matched (
 	FOREIGN KEY(pid) REFERENCES Proposal(id)
 );
 
-CREATE TABLE Reservation (
-	mid int,
-	rid int NOT NULL,
-	size int,
-	CHECK (size > 0),
-	rtime timestamp,
-	PRIMARY KEY(mid),
-	FOREIGN KEY(mid) REFERENCES Meal(me_id), -- This is equivalent to the Placed for relationship
-	FOREIGN KEY(rid) REFERENCES Restaurant(id)
-);
 
-
-#changes:
-###############################
-# add cuisine to proposal 
-# change meal.id to meal.me_id
-# add ideal_size to Meal
-# add constraint to schema start time <= endtime - 30 min (maybe)
-# save latitude and longitude  to restaurant (maybe)
+-- #changes:
+-- ###############################
+-- # add cuisine to proposal 
+-- # change meal.id to meal.me_id
+-- # add ideal_size to Meal
+-- # add constraint to schema start time <= endtime - 30 min (maybe)
+-- # save latitude and longitude  to restaurant (maybe)
