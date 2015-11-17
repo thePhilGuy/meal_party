@@ -14,7 +14,7 @@ CREATE TABLE Restaurant (
 	id serial,
 	zip varchar(10) NOT NULL,
 	name text NOT NULL,
-	cuisine text[],
+	cuisine text,
 	website_url text,
 	PRIMARY KEY(id),
 	FOREIGN KEY(zip) REFERENCES Area(zip) -- Is in relationship
@@ -23,7 +23,7 @@ CREATE TABLE Restaurant (
 CREATE TABLE Proposal (
 	id serial,
 	uid int NOT NULL,
-	cuisine text[],
+	cuisine text,
 	zip varchar(10) NOT NULL, -- in (area) relationship
 	from_time time NOT NULL,
 	until_time time NOT NULL,

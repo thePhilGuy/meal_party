@@ -87,7 +87,8 @@ def area(req_zip):
   Second map at specific area
   """
 
-  print "In area/req_zip"
+  # Get restaurants info for area
+  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
 
   # Check if we already have area data 
   # query : select count(*) from area where zip=req_zip
@@ -97,18 +98,17 @@ def area(req_zip):
 
   # This is the first time this area was requested
   if area_count < 1:
-
     # Insert it into the database
     g.conn.execute("INSERT INTO Area VALUES (\'" + req_zip + "\');")
 
-  # Get restaurants info for area
-  cuisine_results, restaurant_results = factual_wrapper.get_restaurants_by_zip(req_zip)
-
-  # Store in database?
-  for element in restaurant_results:
-    args = (element["zip"], element["name"], element["website"], element["cuisines"])
-    # INSERT INTO Restaurant (zip, name, website_url, cuisine) VALUES (s, s, s, array) where array is formatted as {element[cuisines][0], etc...}
-    g.conn.execute("INSERT INTO Restaurant (zip, name, website_url, cuisine) VALUES (%s, %s, %s, %s);", args)
+    # Store in database
+    for element in restaurant_results:
+      args = (element["zip"], element["name"], element["website"], element["cuisines"])
+      insert_query = text(
+        "INSERT INTO Restaurant (zip, name, website_url, cuisine)"
+        "VALUES (:z, :n, :w, :c);"
+        )
+      g.conn.execute(insert_query, z=element["zip"], n=element["name"], w=element["website"], c=', '.join(element["cuisines"]))
 
   # Google API will only need lat/long/name
   restaurant_locations = [ dict(latitude=r['latitude'], longitude=r['longitude']) 
